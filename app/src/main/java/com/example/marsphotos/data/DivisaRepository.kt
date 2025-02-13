@@ -1,37 +1,41 @@
-/*
- * Copyright (C) 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.example.marsphotos.data
 
 import com.example.marsphotos.model.Divisa
 import com.example.marsphotos.network.DivisaApiService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-/**
- * Repository that fetch mars photos list from marsApi.
- */
 interface DivisaRepository {
-    /** Fetches list of Divisa from marsApi */
-    suspend fun getDivisa(): List<Divisa>
+    suspend fun sincronizarDivisas()
+    suspend fun obtenerDivisasPorFecha(fecha: String): List<Divisa>
 }
 
-/**
- * Network Implementation of Repository that fetch mars photos list from marsApi.
- */
 class NetworkDivisaRepository(
-    private val divisaApiService: DivisaApiService
+    private val divisaApiService: DivisaApiService,
+    private val divisaDao: DivisaDao
 ) : DivisaRepository {
-    /** Fetches list of Divisa from marsApi*/
-    override suspend fun getDivisa(): List<Divisa> = divisaApiService.getPrices()
+
+    override suspend fun sincronizarDivisas() {
+        val respuesta = divisaApiService.getPrices()
+        val fechaActual = obtenerFechaActual()
+
+        val listaDivisas = respuesta.rates.map { (moneda, tasa) ->
+            Divisa(moneda, tasa, fechaActual)
+        }
+
+        withContext(Dispatchers.IO) {
+            divisaDao.insertarDivisas(listaDivisas)
+        }
+    }
+
+    override suspend fun obtenerDivisasPorFecha(fecha: String): List<Divisa> {
+        return withContext(Dispatchers.IO) {
+            divisaDao.obtenerDivisasPorFecha(fecha)
+        }
+    }
+
+    private fun obtenerFechaActual(): String {
+        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+        return sdf.format(java.util.Date())
+    }
 }
