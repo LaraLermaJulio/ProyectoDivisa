@@ -24,9 +24,9 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.marsphotos.MarsPhotosApplication
-import com.example.marsphotos.data.MarsPhotosRepository
-import com.example.marsphotos.model.MarsPhoto
+import com.example.marsphotos.DivisaApplication
+import com.example.marsphotos.data.DivisaRepository
+import com.example.marsphotos.model.Divisa
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -34,15 +34,15 @@ import java.io.IOException
 /**
  * UI state for the Home screen
  */
-sealed interface MarsUiState {
-    data class Success(val photos: String) : MarsUiState
-    object Error : MarsUiState
-    object Loading : MarsUiState
+sealed interface DivisaUiState {
+    data class Success(val photos: String) : DivisaUiState
+    object Error : DivisaUiState
+    object Loading : DivisaUiState
 }
 
-class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : ViewModel() {
+class DivisaViewModel(private val divisaRepository: DivisaRepository) : ViewModel() {
     /** The mutable State that stores the status of the most recent request */
-    var marsUiState: MarsUiState by mutableStateOf(MarsUiState.Loading)
+    var marsUiState: DivisaUiState by mutableStateOf(DivisaUiState.Loading)
         private set
 
     /**
@@ -54,20 +54,20 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : Vi
 
     /**
      * Gets Mars photos information from the Mars API Retrofit service and updates the
-     * [MarsPhoto] [List] [MutableList].
+     * [Divisa] [List] [MutableList].
      */
     fun getMarsPhotos() {
         viewModelScope.launch {
-            marsUiState = MarsUiState.Loading
+            marsUiState = DivisaUiState.Loading
             marsUiState = try {
-                val listResult = marsPhotosRepository.getMarsPhotos()
-                MarsUiState.Success(
+                val listResult = divisaRepository.getDivisa()
+                DivisaUiState.Success(
                     "Success: ${listResult.size} Mars photos retrieved"
                 )
             } catch (e: IOException) {
-                MarsUiState.Error
+                DivisaUiState.Error
             } catch (e: HttpException) {
-                MarsUiState.Error
+                DivisaUiState.Error
             }
         }
     }
@@ -78,9 +78,9 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : Vi
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val application = (this[APPLICATION_KEY] as MarsPhotosApplication)
-                val marsPhotosRepository = application.container.marsPhotosRepository
-                MarsViewModel(marsPhotosRepository = marsPhotosRepository)
+                val application = (this[APPLICATION_KEY] as DivisaApplication)
+                val divisaRepository = application.container.divisaRepository
+                DivisaViewModel(divisaRepository = divisaRepository)
             }
         }
     }

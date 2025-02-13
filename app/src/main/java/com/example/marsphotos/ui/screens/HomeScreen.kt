@@ -33,21 +33,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.marsphotos.R
-import com.example.marsphotos.model.MarsPhoto
-import com.example.marsphotos.ui.theme.MarsPhotosTheme
+import com.example.marsphotos.model.Divisa
+import com.example.marsphotos.ui.theme.DivisaTheme
 
 @Composable
 fun HomeScreen(
-    marsUiState: MarsUiState,
+    divisaUiState: DivisaUiState,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
-    when (marsUiState) {
-        is MarsUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
-        is MarsUiState.Success -> ResultScreen(
-            marsUiState.photos, modifier = modifier.fillMaxWidth()
+    when (divisaUiState) {
+        is DivisaUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
+        is DivisaUiState.Success -> ResultScreen(
+            divisaUiState.photos, modifier = modifier.fillMaxWidth()
         )
-        is MarsUiState.Error -> ErrorScreen(modifier = modifier.fillMaxSize())
+        is DivisaUiState.Error -> ErrorScreen(modifier = modifier.fillMaxSize())
     }
 }
 
@@ -96,7 +96,7 @@ fun ResultScreen(photos: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun LoadingScreenPreview() {
-    MarsPhotosTheme {
+    DivisaTheme {
         LoadingScreen()
     }
 }
@@ -104,7 +104,7 @@ fun LoadingScreenPreview() {
 @Preview(showBackground = true)
 @Composable
 fun ErrorScreenPreview() {
-    MarsPhotosTheme {
+    DivisaTheme {
         ErrorScreen()
     }
 }
@@ -112,8 +112,8 @@ fun ErrorScreenPreview() {
 @Preview(showBackground = true)
 @Composable
 fun PhotosGridScreenPreview() {
-    MarsPhotosTheme {
-        val mockData = List(10) { MarsPhoto("$it", "") }
+    DivisaTheme {
+        val mockData = List(10) { Divisa("$it", "") }
         ResultScreen(stringResource(R.string.placeholder_success))
     }
 }

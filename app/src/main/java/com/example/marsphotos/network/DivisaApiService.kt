@@ -16,18 +16,15 @@
 
 package com.example.marsphotos.network
 
-import com.example.marsphotos.model.MarsPhoto
+import com.example.marsphotos.model.Divisa
 import retrofit2.http.GET
 
-/**
- * A public interface that exposes the [getPhotos] method
- */
-interface MarsApiService {
+interface DivisaApiService {
     /**
-     * Returns a [List] of [MarsPhoto] and this method can be called from a Coroutine.
+     * Returns a [List] of [Divisa] and this method can be called from a Coroutine.
      * The @GET annotation indicates that the "photos" endpoint will be requested with the GET
      * HTTP method
      */
     @GET("photos")
-    suspend fun getPhotos(): List<MarsPhoto>
+    suspend fun getPrices(): List<Divisa>
 }

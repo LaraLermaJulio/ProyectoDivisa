@@ -15,7 +15,7 @@
  */
 package com.example.marsphotos.data
 
-import com.example.marsphotos.network.MarsApiService
+import com.example.marsphotos.network.DivisaApiService
 import retrofit2.Retrofit
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -25,7 +25,7 @@ import okhttp3.MediaType.Companion.toMediaType
  * Dependency Injection container at the application level.
  */
 interface AppContainer {
-    val marsPhotosRepository: MarsPhotosRepository
+    val divisaRepository: DivisaRepository
 }
 
 /**
@@ -47,14 +47,14 @@ class DefaultAppContainer : AppContainer {
     /**
      * Retrofit service object for creating api calls
      */
-    private val retrofitService: MarsApiService by lazy {
-        retrofit.create(MarsApiService::class.java)
+    private val retrofitService: DivisaApiService by lazy {
+        retrofit.create(DivisaApiService::class.java)
     }
 
     /**
      * DI implementation for Mars photos repository
      */
-    override val marsPhotosRepository: MarsPhotosRepository by lazy {
-        NetworkMarsPhotosRepository(retrofitService)
+    override val divisaRepository: DivisaRepository by lazy {
+        NetworkDivisaRepository(retrofitService)
     }
 }

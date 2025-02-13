@@ -13,18 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.example.marsphotos
 
-package com.example.marsphotos.model
+import android.app.Application
+import com.example.marsphotos.data.AppContainer
+import com.example.marsphotos.data.DefaultAppContainer
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-/**
- * This data class defines a Mars photo which includes an ID, and the image URL.
- */
-@Serializable
-data class MarsPhoto(
-    val id: String,
-    @SerialName(value = "img_src")
-    val imgSrc: String
-)
+class DivisaApplication : Application() {
+    /** AppContainer instance used by the rest of classes to obtain dependencies */
+    lateinit var container: AppContainer
+    override fun onCreate() {
+        super.onCreate()
+        container = DefaultAppContainer()
+    }
+}
