@@ -1,4 +1,4 @@
-package com.example.marsphotos.network
+package com.example.divisa.network
 
 import kotlinx.serialization.Serializable
 import retrofit2.http.GET

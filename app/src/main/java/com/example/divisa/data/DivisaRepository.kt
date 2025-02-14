@@ -1,7 +1,7 @@
-package com.example.marsphotos.data
+package com.example.divisa.data
 
-import com.example.marsphotos.model.Divisa
-import com.example.marsphotos.network.DivisaApiService
+import com.example.divisa.model.Divisa
+import com.example.divisa.network.DivisaApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -1,4 +1,4 @@
-package com.example.marsphotos.ui.screens
+package com.example.divisa.ui.screens
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.marsphotos.DivisaApplication
-import com.example.marsphotos.data.DivisaRepository
+import com.example.divisa.DivisaApplication
+import com.example.divisa.data.DivisaRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException

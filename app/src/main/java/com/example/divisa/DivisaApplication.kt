@@ -1,8 +1,8 @@
-package com.example.marsphotos
+package com.example.divisa
 
 import android.app.Application
-import com.example.marsphotos.data.AppContainer
-import com.example.marsphotos.data.DefaultAppContainer
+import com.example.divisa.data.AppContainer
+import com.example.divisa.data.DefaultAppContainer
 
 class DivisaApplication : Application() {
     lateinit var container: AppContainer

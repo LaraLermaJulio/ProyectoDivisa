@@ -1,8 +1,8 @@
-package com.example.marsphotos.ui
+package com.example.divisa.ui
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.marsphotos.ui.screens.DivisaViewModel
+import com.example.divisa.ui.screens.DivisaViewModel
 
 @Composable
 fun DivisaApp() {

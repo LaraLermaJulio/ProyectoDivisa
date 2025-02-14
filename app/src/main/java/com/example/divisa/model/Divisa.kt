@@ -1,4 +1,4 @@
-package com.example.marsphotos.model
+package com.example.divisa.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

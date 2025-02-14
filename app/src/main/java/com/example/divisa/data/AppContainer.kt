@@ -1,8 +1,8 @@
-package com.example.marsphotos.data
+package com.example.divisa.data
 
 import android.content.Context
 import androidx.room.Room
-import com.example.marsphotos.network.DivisaApiService
+import com.example.divisa.network.DivisaApiService
 import retrofit2.Retrofit
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json

@@ -22,11 +22,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.marsphotos"
+    namespace = "com.example.divisa"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.marsphotos"
+        applicationId = "com.example.divisa"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
