@@ -13,7 +13,7 @@ interface AppContainer {
 }
 
 class DefaultAppContainer(context: Context) : AppContainer {
-    private val baseUrl = "https://open.er-api.com/v6/"
+    private val baseUrl = "https://v6.exchangerate-api.com/v6/1fb9eeb83af165e94771c0f8/"
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(
@@ -24,7 +24,6 @@ class DefaultAppContainer(context: Context) : AppContainer {
         .baseUrl(baseUrl)
         .build()
 
-
     private val retrofitService: DivisaApiService by lazy {
         retrofit.create(DivisaApiService::class.java)
     }
@@ -34,7 +33,9 @@ class DefaultAppContainer(context: Context) : AppContainer {
             context,
             DivisaDatabase::class.java,
             "divisa_db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     override val divisaRepository: DivisaRepository by lazy {

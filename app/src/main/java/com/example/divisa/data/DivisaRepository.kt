@@ -19,7 +19,7 @@ class NetworkDivisaRepository(
         val respuesta = divisaApiService.getPrices()
         val fechaActual = obtenerFechaActual()
 
-        val listaDivisas = respuesta.rates.map { (moneda, tasa) ->
+        val listaDivisas = respuesta.conversion_rates.map { (moneda, tasa) ->
             Divisa(moneda, tasa, fechaActual)
         }
 
