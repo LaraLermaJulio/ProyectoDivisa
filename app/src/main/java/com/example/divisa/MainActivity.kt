@@ -1,47 +1,20 @@
-package com.example.divisa.ui
+package com.example.divisa
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import com.example.divisa.ui.theme.DivisaTheme
-import com.example.divisa.workers.ActualizarDivisasWorker
-import java.util.concurrent.TimeUnit
-
+import androidx.activity.viewModels
+import com.example.divisa.ui.screens.DivisaScreen
+import com.example.divisa.ui.screens.DivisaViewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: DivisaViewModel by viewModels { DivisaViewModel.Factory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("MainActivity", "onCreate se ejecutó correctamente")
-        programarActualizacionDivisas()
-
         setContent {
-            DivisaTheme {
-                DivisaApp()
-            }
+            DivisaScreen(viewModel = viewModel)
         }
-    }
-
-    private fun programarActualizacionDivisas() {
-
-        val trabajoRepetido = PeriodicWorkRequestBuilder<ActualizarDivisasWorker>(
-            15, TimeUnit.MINUTES
-        )
-            .setInitialDelay(0, TimeUnit.MINUTES)
-            .build()
-
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            "actualizarDivisas",
-            ExistingPeriodicWorkPolicy.KEEP,
-            trabajoRepetido
-        )
     }
 }

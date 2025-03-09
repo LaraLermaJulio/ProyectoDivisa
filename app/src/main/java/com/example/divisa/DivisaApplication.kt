@@ -19,10 +19,8 @@ class DivisaApplication : Application(), Configuration.Provider {
         }
     }
 
-    // Usar 'val' en vez de 'fun'
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()
             .setMinimumLoggingLevel(android.util.Log.DEBUG)
             .build()
 }
-
