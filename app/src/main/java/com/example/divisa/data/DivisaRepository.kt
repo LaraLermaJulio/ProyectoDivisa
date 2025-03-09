@@ -1,5 +1,6 @@
 package com.example.divisa.data
 
+import android.util.Log
 import com.example.divisa.model.Divisa
 import com.example.divisa.network.DivisaApiService
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,13 @@ class NetworkDivisaRepository(
         val fechaActual = obtenerFechaActual()
 
         val listaDivisas = respuesta.conversion_rates.map { (moneda, tasa) ->
-            Divisa(moneda, tasa, fechaActual)
+            val divisa = Divisa(
+                moneda = moneda,
+                valor = tasa,
+                fecha = fechaActual
+            )
+            Log.d("DEBUG_FECHA", "Divisa: $divisa") // Imprime la fecha que se va a guardar
+            divisa
         }
 
         withContext(Dispatchers.IO) {
@@ -35,7 +42,8 @@ class NetworkDivisaRepository(
     }
 
     private fun obtenerFechaActual(): String {
-        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault())
+        sdf.timeZone = java.util.TimeZone.getTimeZone("America/Mexico_City")
         return sdf.format(java.util.Date())
     }
 }

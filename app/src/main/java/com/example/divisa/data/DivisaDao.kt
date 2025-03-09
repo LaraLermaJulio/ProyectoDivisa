@@ -8,7 +8,7 @@ import com.example.divisa.model.Divisa
 
 @Dao
 interface DivisaDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertarDivisas(divisas: List<Divisa>)
 
     @Query("SELECT * FROM divisas WHERE fecha = :fecha")

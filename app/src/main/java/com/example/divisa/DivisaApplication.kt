@@ -25,3 +25,4 @@ class DivisaApplication : Application(), Configuration.Provider {
             .setMinimumLoggingLevel(android.util.Log.DEBUG)
             .build()
 }
+
