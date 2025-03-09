@@ -21,19 +21,16 @@ class NetworkDivisaRepository(
         val fechaActual = obtenerFechaActual()
 
         val listaDivisas = respuesta.conversion_rates.map { (moneda, tasa) ->
-            val divisa = Divisa(
-                moneda = moneda,
-                valor = tasa,
-                fecha = fechaActual
-            )
-            Log.d("DEBUG_FECHA", "Divisa: $divisa") // Imprime la fecha que se va a guardar
-            divisa
+            Divisa(moneda = moneda, valor = tasa.toString(), fecha = fechaActual)
         }
 
         withContext(Dispatchers.IO) {
             divisaDao.insertarDivisas(listaDivisas)
+            Log.d("DivisaRepository", "Divisas sincronizadas: $listaDivisas")
         }
     }
+
+
 
     override suspend fun obtenerDivisasPorFecha(fecha: String): List<Divisa> {
         return withContext(Dispatchers.IO) {

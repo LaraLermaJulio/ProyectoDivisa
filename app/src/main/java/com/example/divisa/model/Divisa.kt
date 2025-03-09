@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Entity(tableName = "divisas")
 data class Divisa(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val moneda: String,
-    val valor: Double,
+    val valor: String,
     val fecha: String
 )
+

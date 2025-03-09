@@ -10,6 +10,7 @@ import okhttp3.MediaType.Companion.toMediaType
 
 interface AppContainer {
     val divisaRepository: DivisaRepository
+    val database: DivisaDatabase  // Exponer la base de datos
 }
 
 class DefaultAppContainer(context: Context) : AppContainer {
@@ -28,14 +29,12 @@ class DefaultAppContainer(context: Context) : AppContainer {
         retrofit.create(DivisaApiService::class.java)
     }
 
-    private val database: DivisaDatabase by lazy {
+    override val database: DivisaDatabase by lazy {
         Room.databaseBuilder(
             context,
             DivisaDatabase::class.java,
             "divisa_db"
-        )
-            .fallbackToDestructiveMigration()
-            .build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     override val divisaRepository: DivisaRepository by lazy {
