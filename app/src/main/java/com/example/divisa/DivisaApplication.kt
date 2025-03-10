@@ -6,7 +6,6 @@ import com.example.divisa.data.AppContainer
 import com.example.divisa.data.DefaultAppContainer
 
 class DivisaApplication : Application(), Configuration.Provider {
-
     lateinit var container: AppContainer
 
     override fun onCreate() {

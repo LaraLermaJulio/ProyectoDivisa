@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "divisas")
 data class Divisa(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0L,      // Cambiado de Int a Long
     val moneda: String,
     val tasa: Double,
     val fechaHora: String

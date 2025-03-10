@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.TimeZone
 
 class NetworkDivisaRepository(
     private val divisaApiService: DivisaApiService,
@@ -26,7 +27,7 @@ class NetworkDivisaRepository(
                 divisaDao.insertarDivisas(listaDivisas)
             }
 
-            Log.d("NetworkDivisaRepository", "✅ Sincronización exitosa, divisas insertadas.")
+            Log.d("NetworkDivisaRepository", "✅ Sincronización exitosa en $fechaActual")
         } catch (e: Exception) {
             Log.e("NetworkDivisaRepository", "❌ Error al sincronizar divisas:", e)
         }
@@ -48,9 +49,14 @@ class NetworkDivisaRepository(
         }
     }
 
+    /**
+     * Retorna la fecha/hora actual en formato "EEE, dd MMM yyyy HH:mm:ss Z"
+     * con la zona horaria local (ej: America/Mexico_City).
+     */
     private fun obtenerFechaActual(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        sdf.timeZone = java.util.TimeZone.getTimeZone("America/Mexico_City")
-        return sdf.format(java.util.Date())
+        val displayFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.getDefault()).apply {
+            timeZone = TimeZone.getDefault()
+        }
+        return displayFormat.format(java.util.Date())
     }
 }

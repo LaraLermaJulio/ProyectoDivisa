@@ -6,9 +6,4 @@ interface DivisaRepository {
     suspend fun sincronizarDivisas()
     suspend fun obtenerDivisasPorFecha(fecha: String): List<Divisa>
     suspend fun obtenerDivisasPorRango(currency: String, startDate: String, endDate: String): List<Divisa>
-
-
 }
-
-
-

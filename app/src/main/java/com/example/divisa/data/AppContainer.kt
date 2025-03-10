@@ -12,13 +12,14 @@ interface AppContainer {
     val divisaRepository: DivisaRepository
 }
 
-class DefaultAppContainer(private val context: Context) : AppContainer {
+class DefaultAppContainer(context: Context) : AppContainer {
     private val baseUrl = "https://v6.exchangerate-api.com/v6/1fb9eeb83af165e94771c0f8/"
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(
-            Json { ignoreUnknownKeys = true }
-                .asConverterFactory("application/json".toMediaType())
+            Json {
+                ignoreUnknownKeys = true
+            }.asConverterFactory("application/json".toMediaType())
         )
         .baseUrl(baseUrl)
         .build()

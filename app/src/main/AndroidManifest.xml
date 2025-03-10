@@ -40,7 +40,7 @@
         </activity>
 
         <provider
-            android:name="com.example.divisa.DivisaContentProvider"
+            android:name="com.example.divisa.ui.screens.DivisaContentProvider"
             android:authorities="com.example.divisa.provider"
             android:exported="true" />
 
