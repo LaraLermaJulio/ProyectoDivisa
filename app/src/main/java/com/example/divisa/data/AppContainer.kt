@@ -10,10 +10,10 @@ import okhttp3.MediaType.Companion.toMediaType
 
 interface AppContainer {
     val divisaRepository: DivisaRepository
-    val database: DivisaDatabase  // Exponer la base de datos
+    val database: DivisaDatabase // Exponer la base de datos
 }
 
-class DefaultAppContainer(context: Context) : AppContainer {
+class DefaultAppContainer(private val context: Context) : AppContainer {
     private val baseUrl = "https://v6.exchangerate-api.com/v6/1fb9eeb83af165e94771c0f8/"
 
     private val retrofit: Retrofit = Retrofit.Builder()
@@ -38,6 +38,6 @@ class DefaultAppContainer(context: Context) : AppContainer {
     }
 
     override val divisaRepository: DivisaRepository by lazy {
-        NetworkDivisaRepository(retrofitService, database.divisaDao())
+        NetworkDivisaRepository(context, retrofitService, database.divisaDao())
     }
 }

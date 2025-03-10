@@ -8,7 +8,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.divisa.ui.theme.DivisaTheme
@@ -30,18 +33,33 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun programarActualizacionDivisas() {
-
+        // Usar una frecuencia más apropiada para la batería (cada 6 horas)
         val trabajoRepetido = PeriodicWorkRequestBuilder<ActualizarDivisasWorker>(
-            15, TimeUnit.MINUTES
+            6, TimeUnit.HOURS
         )
-            .setInitialDelay(0, TimeUnit.MINUTES)
+            .setInitialDelay(10, TimeUnit.MINUTES) // Dar tiempo para que la app se inicie completamente
+            .setConstraints(
+                Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build()
+            )
             .build()
-
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             "actualizarDivisas",
             ExistingPeriodicWorkPolicy.KEEP,
             trabajoRepetido
         )
+
+        // Opcionalmente, ejecutar una sincronización inmediata al iniciar
+        val trabajoInmediato = OneTimeWorkRequestBuilder<ActualizarDivisasWorker>()
+            .setConstraints(
+                Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build()
+            )
+            .build()
+
+        WorkManager.getInstance(this).enqueue(trabajoInmediato)
     }
 }

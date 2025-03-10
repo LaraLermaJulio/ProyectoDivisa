@@ -44,18 +44,19 @@ class DivisaContentProvider : ContentProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor? {
-        Log.d("DivisaContentProvider", "Query recibida: ${uri.toString()}, selection: $selection, args: ${selectionArgs?.joinToString()}") // ✅ Verifica la consulta
+        Log.d("DivisaContentProvider", "Query recibida: ${uri.toString()}, selection: $selection, args: ${selectionArgs?.joinToString()}")
 
+        // El ContentProvider debe manejar la consulta de forma segura para el hilo principal
         return when (uriMatcher.match(uri)) {
             DIVISAS -> {
                 val fecha = selectionArgs?.getOrNull(0) ?: ""
-                Log.d("DivisaContentProvider", "Buscando divisas con fecha: $fecha") // ✅ Verifica filtro de fecha
+                Log.d("DivisaContentProvider", "Buscando divisas con fecha: $fecha")
+                // Room permite retornar directamente un Cursor en el hilo principal
                 divisaDao.obtenerDivisasPorFechaCursor(fecha)
             }
             else -> null
         }
     }
-
 
     override fun getType(uri: Uri): String? {
         return when (uriMatcher.match(uri)) {
